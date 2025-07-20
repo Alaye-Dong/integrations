@@ -1,11 +1,15 @@
 import type { PluginSimple } from 'markdown-it'
+
 import { basename, dirname, extname, posix, relative, sep } from 'node:path'
 import { cwd } from 'node:process'
-import { cyan, gray, yellow } from 'colorette'
+
 import _debug from 'debug'
+
+import { cyan, gray, yellow } from 'colorette'
 import { globSync } from 'tinyglobby'
 
 import packageJSON from '../package.json'
+
 import { findBiDirectionalLinks, genAudio, genImage, genLink, genVideo } from './utils'
 
 /** it will match [[file]] and [[file|text]] */
@@ -193,6 +197,12 @@ export interface BiDirectionalLinksOptions {
    */
   includesPatterns?: string[]
   /**
+   * Excludes files added from `includePatterns` from being searched if it matches at least one of these patterns.
+   *
+   * @default '_*, dist, node_modules'
+   */
+  excludesPatterns?: string[]
+  /**
    * Whether to include debugging logs.
    *
    * @default false
@@ -204,6 +214,17 @@ export interface BiDirectionalLinksOptions {
    * @default false
    */
   noNoMatchedFileWarning?: boolean
+  /**
+   * Generate an error link or a link to a specific page when no matched file is found.
+   *
+   * When you use this option, you should define a css style for
+   * `.nolebase-route-link-invalid` (or `a[href="#"] {}`) to
+   * distinguish the invalid link from the normal link. Such as:
+   * `a.nolebase-route-link-invalid { color: red; opacity: 0.6; }`
+   *
+   * @default false
+   */
+  stillRenderNoMatched?: boolean
   /**
    * Force a relative path instead of an absolute path
    *
@@ -218,14 +239,17 @@ export interface BiDirectionalLinksOptions {
  * @param options.dir - The directory to search for bi-directional links.
  * @param options.baseDir - The base directory joined as href for bi-directional links.
  * @param options.includesPatterns - The glob patterns to search for bi-directional links.
+ * @param options.excludesPatterns - The glob patterns to exclude files from search.
  * @returns A markdown-it plugin.
  */
 export const BiDirectionalLinks: (options?: BiDirectionalLinksOptions) => PluginSimple = (options) => {
   const rootDir = options?.dir ?? cwd()
   const baseDir = options?.baseDir ?? '/'
   const includes = options?.includesPatterns ?? []
+  const excludes = options?.excludesPatterns ?? ['_*', 'dist', 'node_modules']
   const debugOn = options?.debug ?? false
   const noNoMatchedFileWarning = options?.noNoMatchedFileWarning ?? false
+  const stillRenderNoMatched = options?.stillRenderNoMatched ?? false
   const isRelativePath = options?.isRelativePath ?? false
 
   const possibleBiDirectionalLinksInCleanBaseNameOfFilePaths: Record<string, string> = {}
@@ -242,11 +266,7 @@ export const BiDirectionalLinks: (options?: BiDirectionalLinksOptions) => Plugin
     onlyFiles: true,
     absolute: true,
     cwd: rootDir,
-    ignore: [
-      '_*',
-      'dist',
-      'node_modules',
-    ],
+    ignore: excludes,
   })
 
   for (const file of files) {
@@ -339,7 +359,10 @@ export const BiDirectionalLinks: (options?: BiDirectionalLinksOptions) => Plugin
       if (matchedHrefSingleOrArray === null || (Array.isArray(matchedHrefSingleOrArray) && matchedHrefSingleOrArray.length === 0)) {
         const relevantPath = findTheMostRelevantOne(possibleBiDirectionalLinksInCleanBaseNameOfFilePaths, possibleBiDirectionalLinksInFullFilePaths, osSpecificHref)
         logNoMatchedFileWarning(rootDir, inputContent, markupTextContent, href, osSpecificHref, state.env.path, !noNoMatchedFileWarning, relevantPath)
-
+        if (stillRenderNoMatched) {
+          genLink(state, '', href, md, href, link, true)
+          return true
+        }
         return false
       }
 
@@ -355,9 +378,20 @@ export const BiDirectionalLinks: (options?: BiDirectionalLinksOptions) => Plugin
 
       let resolvedNewHref: string
       if (isRelativePath) {
-        resolvedNewHref = relative(dirname(state.env.relativePath), matchedHref)
-          .split(sep)
-          .join('/')
+        if (state.env.relativePath) { // VitePress
+          resolvedNewHref = relative(dirname(state.env.relativePath), matchedHref)
+            .split(sep)
+            .join('/')
+        }
+        else if (state.env.filePathRelative) { // VuePress, see https://github.com/nolebase/integrations/pull/361 for details
+          resolvedNewHref = relative(dirname(state.env.filePathRelative), matchedHref)
+            .split(sep)
+            .join('/')
+        }
+        else { // other
+          console.error('Can\'t find local file path')
+          return false
+        }
       }
       else {
         resolvedNewHref = posix.join(

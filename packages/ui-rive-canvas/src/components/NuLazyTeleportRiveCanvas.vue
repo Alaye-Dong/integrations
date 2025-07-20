@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Rive } from './deps'
+
 import { useRoute } from 'vitepress'
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
@@ -92,14 +93,14 @@ function createNewCanvasElement(options: CreateCanvasOptions) {
   canvas.width = options.canvasWidth
   canvas.height = options.canvasHeight
   canvas.style.cssText = ''
-  + `padding-top: ${options.paddingTop};`
-  + `padding-bottom: ${options.paddingBottom};`
-  + `padding-left: ${options.paddingLeft};`
-  + `padding-right: ${options.paddingRight};`
-  + `min-width: ${options.width};`
-  + `min-height: ${options.height};`
-  + `width: 100%;`
-  + `height: 100%;`
+    + `padding-top: ${options.paddingTop};`
+    + `padding-bottom: ${options.paddingBottom};`
+    + `padding-left: ${options.paddingLeft};`
+    + `padding-right: ${options.paddingRight};`
+    + `min-width: ${options.width};`
+    + `min-height: ${options.height};`
+    + `width: 100%;`
+    + `height: 100%;`
 
   return canvas
 }

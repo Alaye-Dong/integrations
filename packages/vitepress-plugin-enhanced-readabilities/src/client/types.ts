@@ -311,7 +311,7 @@ export interface Options {
       /**
        * Default percentage of content layout max width
        *
-       * @default 100 (100%)
+       * @default 80 (80%)
        */
       defaultMaxWidth?: number
       /**
@@ -332,7 +332,7 @@ export interface Options {
       /**
        * Default percentage of page layout max width
        *
-       * @default 800 (80%)
+       * @default 100 (100%)
        */
       defaultMaxWidth?: number
       /**
@@ -345,6 +345,12 @@ export interface Options {
    * Spotlight configuration
    */
   spotlight?: {
+    /**
+     * Disable spotlight
+     *
+     * @default false
+     */
+    disabled?: boolean
     /**
      * Disable spotlight help tooltip
      *

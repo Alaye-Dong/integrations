@@ -1,12 +1,15 @@
-name: Relase
+name: Release
 
 on:
   push:
     tags:
       - 'v*'
 
-env:
-  STORE_PATH: ''
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   release:
@@ -15,32 +18,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install Node.js 22.x
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 'lts/*'
           # registry-url required. Learn more at
           # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
           registry-url: 'https://registry.npmjs.org'
-
-      - uses: pnpm/action-setup@v3
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -49,6 +40,12 @@ jobs:
         run: pnpm run packages:build
 
       - name: Packages publish
-        run: pnpm run packages:publish
+        run: pnpm publish -r --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_PROVENANCE: true
+
+      - name: Sync GitHub Release
+        run: pnpm run changelogithub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

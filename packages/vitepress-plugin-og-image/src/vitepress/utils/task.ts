@@ -2,9 +2,12 @@
 // https://github.com/vuejs/vitepress/blob/df8753bd927c2b57b9188fb292c1429e9c3c8ab6/src/node/utils/task.ts
 
 import type { SiteConfig } from 'vitepress'
+
 import { relative } from 'node:path'
-import { cyan, gray, green, red, yellow } from 'colorette'
+
 import ora from 'ora'
+
+import { cyan, gray, green, red, yellow } from 'colorette'
 
 interface TaskResultSuccess {
   status: 'success'
@@ -49,7 +52,7 @@ export async function task(taskName: string, task: () => Promise<string | undefi
   }
 
   const elapsed = Date.now() - startsAt
-  const suffixText = `${gray(`(${elapsed}ms)`)} ${result}` ?? ''
+  const suffixText = `${gray(`(${elapsed}ms)`)} ${result || ''}`
 
   spinner.stopAndPersist({ symbol: okMark, suffixText })
 }

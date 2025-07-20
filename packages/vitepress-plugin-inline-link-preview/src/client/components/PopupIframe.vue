@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
+
+import LinkButton from './LinkButton.vue'
+
 import { useI18n } from '../composables/i18n'
 import { defaultLinkPreviewPopupOptions, InjectionKey } from '../constants'
 import { attemptWithDelay } from '../utils'
-import LinkButton from './LinkButton.vue'
 
-const props = defineProps < {
+const props = defineProps <{
   href: string
 }>()
 

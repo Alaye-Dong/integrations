@@ -1,7 +1,7 @@
 {
   "name": "@nolebase/ui",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.18.0",
   "description": "A collection of Vue components Nolebase uses.",
   "author": {
     "name": "Nólëbase",
@@ -66,15 +66,14 @@
     "dev": "unbuild --stub",
     "stub": "unbuild --stub",
     "build": "unbuild",
-    "package:publish": "pnpm build && pnpm publish --access public --no-git-checks"
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vitepress": "catalog:vitepress-all"
   },
   "dependencies": {
-    "@iconify-json/octicon": "^1.2.1",
-    "less": "^4.2.1",
-    "vitepress": "catalog:",
+    "@iconify-json/octicon": "catalog:",
+    "less": "catalog:",
     "vue": "catalog:"
-  },
-  "devDependencies": {
-    "@vue/tsconfig": "^0.7.0"
   }
 }

@@ -1,11 +1,14 @@
 import type { SiteConfig } from 'vitepress'
-import type { BuildEndGenerateOpenGraphImagesOptionsCategory, PageItem } from './types'
-import { dirname, resolve, sep } from 'node:path'
 
+import type { BuildEndGenerateOpenGraphImagesOptionsCategory, PageItem } from './types'
+
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { red, yellow } from 'colorette'
 
 import fs from 'fs-extra'
+
+import { red, yellow } from 'colorette'
+
 import { logModulePrefix } from './constants'
 
 export async function tryToLocateTemplateSVGFile(siteConfig: SiteConfig, configTemplateSvgPath?: string): Promise<string | undefined> {
@@ -88,7 +91,7 @@ export async function applyCategoryText(pageItem: PageItem, categoryOptions?: Bu
       return
     }
 
-    const dirs = pageItem.sourceFilePath.split(sep)
+    const dirs = pageItem.sourceFilePath.split('/')
     if (dirs.length > level)
       return dirs[level]
 

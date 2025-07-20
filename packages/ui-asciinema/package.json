@@ -1,7 +1,7 @@
 {
   "name": "@nolebase/ui-asciinema",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.18.0",
   "description": "Wrapper of `asciinema-player` for VitePress documentation sites.",
   "author": {
     "name": "Nólëbase",
@@ -68,17 +68,14 @@
     "dev": "unbuild --stub",
     "stub": "unbuild --stub",
     "build": "unbuild",
-    "package:publish": "pnpm build && pnpm publish --access public --no-git-checks"
+    "typecheck": "vue-tsc --noEmit"
   },
   "peerDependencies": {
-    "asciinema-player": "^3.7.1"
+    "asciinema-player": "^3.10.0",
+    "vitepress": "catalog:vitepress-all"
   },
   "dependencies": {
-    "less": "^4.2.1",
-    "vitepress": "catalog:",
+    "less": "catalog:",
     "vue": "catalog:"
-  },
-  "devDependencies": {
-    "@vue/tsconfig": "^0.7.0"
   }
 }

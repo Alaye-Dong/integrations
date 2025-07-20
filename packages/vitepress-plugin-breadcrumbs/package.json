@@ -1,7 +1,7 @@
 {
   "name": "@nolebase/vitepress-plugin-breadcrumbs",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.18.0",
   "description": "A VitePress plugin that adds breadcrumbs to your documentation.",
   "author": {
     "name": "Nólëbase",
@@ -50,9 +50,9 @@
     "dev": "unbuild --stub",
     "stub": "unbuild --stub",
     "build": "unbuild",
-    "package:publish": "pnpm build && pnpm publish --access public --no-git-checks"
+    "typecheck": "vue-tsc --noEmit"
   },
-  "dependencies": {
-    "vitepress": "catalog:"
+  "peerDependencies": {
+    "vitepress": "catalog:vitepress-all"
   }
 }

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { DatetimeProperty } from '../types'
+import type { DatetimeProperty, LocaleName } from '../types'
 
 import { useData } from 'vitepress'
+
 import { formatDistanceToNowFromValue } from '../utils'
 
 const props = defineProps<{
@@ -15,7 +16,7 @@ const { lang } = useData()
 <template>
   <span :title="String(props.value)">
     {{ props.pageProperty?.formatAsFrom
-      ? formatDistanceToNowFromValue(props.value, props.pageProperty?.dateFnsLocaleName || lang)
+      ? formatDistanceToNowFromValue(props.value, props.pageProperty?.dateFnsLocaleName || (lang as unknown as LocaleName) || 'enUS')
       : props.value
     }}
   </span>

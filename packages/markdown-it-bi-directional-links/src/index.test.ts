@@ -1,6 +1,8 @@
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
 import MarkdownIt from 'markdown-it'
+
 import { describe, expect, it } from 'vitest'
 
 import { BiDirectionalLinks } from '.'
@@ -89,6 +91,46 @@ describe('markdown-it-bi-directional-links', () => {
       .render('[[foo.png|alt text]]')
 
     expect(rendered).toBe('<p><img src="/foo.png" alt="alt text"></p>\n')
+  })
+
+  it('image size', () => {
+    const rendered = new MarkdownIt({ html: true })
+      .use(BiDirectionalLinks({ dir: testdataDir }))
+      .render('[[foo.png|300x200]]')
+
+    expect(rendered).toBe('<p><img src="/foo.png" alt="" width="300" height="200"></p>\n')
+  })
+
+  it('image size, without height', () => {
+    const rendered = new MarkdownIt({ html: true })
+      .use(BiDirectionalLinks({ dir: testdataDir }))
+      .render('[[foo.png|300]]')
+
+    expect(rendered).toBe('<p><img src="/foo.png" alt="" width="300"></p>\n')
+  })
+
+  it('image size, with zero height', () => {
+    const rendered = new MarkdownIt({ html: true })
+      .use(BiDirectionalLinks({ dir: testdataDir }))
+      .render('[[foo.png|300x0]]')
+
+    expect(rendered).toBe('<p><img src="/foo.png" alt="" width="300"></p>\n')
+  })
+
+  it('image size, with zero width', () => {
+    const rendered = new MarkdownIt({ html: true })
+      .use(BiDirectionalLinks({ dir: testdataDir }))
+      .render('[[foo.png|0x200]]')
+
+    expect(rendered).toBe('<p><img src="/foo.png" alt="" height="200"></p>\n')
+  })
+
+  it('image size, with alt', () => {
+    const rendered = new MarkdownIt({ html: true })
+      .use(BiDirectionalLinks({ dir: testdataDir }))
+      .render('[[foo.png|alt text|300x200]]')
+
+    expect(rendered).toBe('<p><img src="/foo.png" alt="alt text" width="300" height="200"></p>\n')
   })
 
   it('should render simple form with custom html texts', () => {

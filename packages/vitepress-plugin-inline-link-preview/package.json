@@ -1,7 +1,7 @@
 {
   "name": "@nolebase/vitepress-plugin-inline-link-preview",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.18.0",
   "description": "A VitePress plugin that adds a inline popup to help you preview links while reading.",
   "author": {
     "name": "Nólëbase",
@@ -63,22 +63,24 @@
     "dev": "unbuild --stub",
     "stub": "unbuild --stub",
     "build": "unbuild",
-    "package:publish": "pnpm build && pnpm publish --access public --no-git-checks"
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vitepress": "catalog:vitepress-all"
   },
   "dependencies": {
-    "@iconify-json/icon-park-outline": "^1.2.1",
-    "@iconify-json/octicon": "^1.2.1",
-    "@iconify-json/svg-spinners": "^1.2.1",
+    "@iconify-json/icon-park-outline": "catalog:",
+    "@iconify-json/octicon": "catalog:",
+    "@iconify-json/svg-spinners": "catalog:",
     "@nolebase/markdown-it-element-transform": "workspace:^",
     "@nolebase/ui": "workspace:^",
-    "less": "^4.2.1",
-    "markdown-it": "^14.1.0",
-    "markdown-it-attrs": "^4.2.0",
-    "vitepress": "catalog:"
+    "less": "catalog:",
+    "markdown-it": "catalog:",
+    "markdown-it-attrs": "catalog:"
   },
   "devDependencies": {
-    "@rollup/plugin-yaml": "^4.1.2",
-    "@types/markdown-it": "^14.1.2",
-    "@types/markdown-it-attrs": "^4.1.3"
+    "@rollup/plugin-yaml": "catalog:",
+    "@types/markdown-it": "catalog:",
+    "@types/markdown-it-attrs": "catalog:"
   }
 }

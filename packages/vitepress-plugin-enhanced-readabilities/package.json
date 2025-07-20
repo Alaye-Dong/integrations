@@ -1,7 +1,7 @@
 {
   "name": "@nolebase/vitepress-plugin-enhanced-readabilities",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.18.0",
   "description": "A VitePress plugin enhances the readabilities for VitePress built sites.",
   "author": {
     "name": "Nólëbase",
@@ -57,16 +57,18 @@
     "dev": "unbuild --stub",
     "stub": "unbuild --stub",
     "build": "unbuild",
-    "package:publish": "pnpm build && pnpm publish --access public --no-git-checks"
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vitepress": "catalog:vitepress-all"
   },
   "dependencies": {
-    "@iconify-json/carbon": "^1.2.4",
-    "@iconify-json/icon-park-outline": "^1.2.1",
+    "@iconify-json/carbon": "catalog:",
+    "@iconify-json/icon-park-outline": "catalog:",
     "@nolebase/ui": "workspace:^",
-    "less": "^4.2.1",
-    "vitepress": "catalog:"
+    "less": "catalog:"
   },
   "devDependencies": {
-    "@rollup/plugin-yaml": "^4.1.2"
+    "@rollup/plugin-yaml": "catalog:"
   }
 }

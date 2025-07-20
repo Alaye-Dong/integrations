@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useMounted } from '@vueuse/core'
-import { useI18n } from '../composables/i18n'
+
 import MenuTitle from './MenuTitle.vue'
 import ScreenLayoutSwitch from './ScreenLayoutSwitch.vue'
 import ScreenSpotlight from './ScreenSpotlight.vue'
+
+import { useI18n } from '../composables/i18n'
 
 const mounted = useMounted()
 const { t } = useI18n()
@@ -28,12 +30,12 @@ const { t } = useI18n()
 
 <style>
 .VPNolebaseEnhancedReadabilitiesMenu {
-  --vp-nolebase-enhanced-readabilities-menu-background-color: #EBEDF2;
+  --vp-nolebase-enhanced-readabilities-menu-background-color: var(--vp-c-bg-soft, #e8e8e8);
   --vp-nolebase-enhanced-readabilities-menu-text-color: var(--vp-c-text-1);
 }
 
 .dark .VPNolebaseEnhancedReadabilitiesMenu {
-  --vp-nolebase-enhanced-readabilities-menu-background-color: #2c2f35;
+  --vp-nolebase-enhanced-readabilities-menu-background-color: var(--vp-c-bg-soft, #2c2f35);
   --vp-nolebase-enhanced-readabilities-menu-text-color: var(--vp-c-text-1);
 }
 </style>

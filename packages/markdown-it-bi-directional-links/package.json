@@ -1,7 +1,7 @@
 {
   "name": "@nolebase/markdown-it-bi-directional-links",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.18.0",
   "description": "A markdown-it plugin that adds Obsidian compatible internal links (bi-directional links) to your markdown.",
   "author": {
     "name": "Nólëbase",
@@ -42,18 +42,18 @@
     "stub": "unbuild --stub",
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "package:publish": "pnpm build && pnpm publish --access public --no-git-checks"
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "markdown-it": ">=14.0.0"
+    "markdown-it": ">=14.1.0"
   },
   "dependencies": {
-    "colorette": "^2.0.20",
-    "debug": "^4.3.7",
-    "tinyglobby": "^0.2.10"
+    "colorette": "catalog:",
+    "debug": "catalog:",
+    "tinyglobby": "catalog:"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.12",
-    "@types/markdown-it": "^14.1.2"
+    "@types/debug": "catalog:",
+    "@types/markdown-it": "catalog:"
   }
 }

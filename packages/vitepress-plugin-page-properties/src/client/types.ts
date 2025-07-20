@@ -1,3 +1,7 @@
+import type * as DateFnsLocales from 'date-fns/locale'
+
+export type LocaleName = keyof typeof DateFnsLocales
+
 export interface TagsProperty<K extends PropertyKey> {
   type: 'tags'
   key: K
@@ -17,7 +21,7 @@ export interface DatetimeProperty<K extends PropertyKey> {
   key: K
   title: string
   formatAsFrom?: boolean
-  dateFnsLocaleName?: string
+  dateFnsLocaleName?: LocaleName
   format?: string
   omitEmpty?: boolean
 }
@@ -41,8 +45,8 @@ export interface DynamicProperty<K extends PropertyKey> {
   key: K | string
   title: string
   options:
-    DynamicWordsCountProperty |
-    DynamicReadingTimeProperty
+    DynamicWordsCountProperty
+    | DynamicReadingTimeProperty
 }
 
 export interface DynamicWordsCountProperty {
@@ -51,16 +55,16 @@ export interface DynamicWordsCountProperty {
 
 export interface DynamicReadingTimeProperty {
   type: 'readingTime'
-  dateFnsLocaleName?: string
+  dateFnsLocaleName?: LocaleName
 }
 
-export type Property<K extends PropertyKey> =
-  TagsProperty<K> |
-  PlainProperty<K> |
-  DatetimeProperty<K> |
-  ProgressProperty<K> |
-  LinkProperty<K> |
-  DynamicProperty<K>
+export type Property<K extends PropertyKey>
+  = TagsProperty<K>
+    | PlainProperty<K>
+    | DatetimeProperty<K>
+    | ProgressProperty<K>
+    | LinkProperty<K>
+    | DynamicProperty<K>
 
 export type PropertyType = Property<PropertyKey>['type']
 export type DynamicPropertyType = DynamicProperty<PropertyKey>['options']['type']

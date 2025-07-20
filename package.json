@@ -1,8 +1,9 @@
 {
-  "name": "@nolebase/integrations",
+  "name": "@nolebase/integrations-root",
   "type": "module",
-  "version": "2.11.1",
-  "packageManager": "pnpm@9.14.4",
+  "version": "2.18.0",
+  "private": true,
+  "packageManager": "pnpm@10.13.1",
   "description": "A collection of diverse documentation engineering tools.",
   "author": {
     "name": "Nólëbase",
@@ -21,6 +22,7 @@
     "stub": "pnpm -r --filter=./packages/* --parallel run stub",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
+    "typecheck": "pnpm -r --parallel run typecheck",
     "dev": "pnpm run packages:stub && pnpm run docs:dev",
     "build": "pnpm run packages:build && pnpm run docs:build",
     "preview": "pnpm run docs:preview",
@@ -30,49 +32,55 @@
     "packages:dev": "pnpm cleanup:dist && pnpm -r --filter=./packages/* run dev",
     "packages:stub": "pnpm -r --filter=./packages/* run stub",
     "packages:build": "pnpm cleanup:dist && pnpm -r --filter=./packages/* run build",
-    "packages:publish": "pnpm cleanup:dist && pnpm -r --filter=./packages/* run package:publish",
     "cleanup:dist": "rimraf --glob **/dist",
     "cleanup:node_modules": "rimraf --glob **/node_modules",
     "test": "vitest --coverage",
     "test:ui": "vitest --ui --coverage --coverage.enabled=true",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "up": "taze -w -r -I",
+    "postinstall": "npx simple-git-hooks",
+    "changelogithub": "changelogithub"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.11.2",
-    "@antfu/ni": "^0.23.1",
-    "@cspell/dict-ru_ru": "^2.2.4",
-    "@nolebase/cspell-dict": "^1.3.0",
-    "@types/node": "^22.10.1",
-    "@unocss/cli": "^0.64.1",
-    "@unocss/eslint-config": "^0.64.1",
-    "@unocss/eslint-plugin": "^0.64.1",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "@vitest/coverage-v8": "^2.1.6",
-    "@vitest/ui": "^2.1.6",
-    "@vueuse/core": "^12.0.0",
-    "bumpp": "^9.8.1",
-    "concurrently": "^9.1.0",
-    "eslint": "^9.15.0",
-    "less": "^4.2.1",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.7.2",
-    "unbuild": "^3.0.0-rc.11",
-    "unocss": "^0.64.1",
-    "unplugin-vue-macros": "^2.13.4",
+    "@antfu/eslint-config": "catalog:",
+    "@antfu/ni": "catalog:",
+    "@cspell/dict-ru_ru": "catalog:",
+    "@nolebase/cspell-dict": "catalog:",
+    "@types/node": "catalog:",
+    "@unocss/cli": "catalog:",
+    "@unocss/eslint-config": "catalog:",
+    "@unocss/eslint-plugin": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "@vueuse/core": "catalog:",
+    "bumpp": "catalog:",
+    "changelogithub": "catalog:",
+    "concurrently": "catalog:",
+    "eslint": "catalog:",
+    "less": "catalog:",
+    "lint-staged": "catalog:",
+    "rimraf": "catalog:",
+    "simple-git-hooks": "catalog:",
+    "taze": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
+    "unocss": "catalog:",
+    "unplugin-vue-macros": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-inspect": "^0.10.1",
-    "vitepress": "catalog:",
-    "vitest": "^2.1.6",
+    "vite-plugin-inspect": "catalog:",
+    "vitest": "catalog:",
     "vue": "catalog:",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "catalog:"
   },
   "workspaces": [
     "packages/*",
     "docs"
   ],
-  "pnpm": {
-    "overrides": {
-      "vite": "catalog:"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "pnpm packages:stub && pnpm typecheck && pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

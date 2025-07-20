@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 import { useMotion } from '@vueuse/motion'
-
 import { ref } from 'vue'
+
 import ObsidianLogo from '../assets/obsidian-logo.svg'
 import VitePressLogo from '../assets/vitepress-logo-large.webp'
 import VPHeroImageLayer from './VPHeroImageLogoLayer.vue'
@@ -93,7 +93,7 @@ const refs = [
 refs.forEach((ref, index) => {
   const key = isLessThanMd.value ? 'mobile' : isLessThanLg.value ? 'tablet' : 'desktop'
 
-  const { variant } = useMotion(ref.ref, {
+  const { variant } = useMotion(ref.ref.value, {
     initial: {
       scale: 1,
       y: ref[key].initial.y,

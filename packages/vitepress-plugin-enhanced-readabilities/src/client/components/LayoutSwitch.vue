@@ -4,12 +4,12 @@ import { useLocalStorage, useMediaQuery, useMounted } from '@vueuse/core'
 import { useRoute } from 'vitepress'
 import { computed, inject, onMounted, ref, watch } from 'vue'
 
+import MenuHelp from './MenuHelp.vue'
+import MenuTitle from './MenuTitle.vue'
+
 import { useLayoutAppearanceChangeAnimation } from '../composables/animation'
 import { useI18n } from '../composables/i18n'
 import { InjectionKey, LayoutMode, LayoutSwitchModeStorageKey, supportedLayoutModes } from '../constants'
-
-import MenuHelp from './MenuHelp.vue'
-import MenuTitle from './MenuTitle.vue'
 
 const options = inject(InjectionKey, {})
 
@@ -265,7 +265,7 @@ onMounted(() => {
       padding-right: calc((100vw - var(--vp-nolebase-enhanced-readabilities-full-width-max-width)) / 2) !important;
     }
 
-    .VPDoc.has-aside .content-container {
+    .VPDoc.has-aside div.content-container {
       max-width: var(--vp-nolebase-enhanced-readabilities-full-width-max-width);
     }
 

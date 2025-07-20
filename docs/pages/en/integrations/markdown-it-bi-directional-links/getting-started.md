@@ -1,6 +1,7 @@
 ---
 title: Bi-directional Links
 category: Bi-directional Links
+sidebarTitle: Getting Started
 ---
 
 # Getting started
@@ -103,6 +104,12 @@ interface BiDirectionalLinksOptions {
    */
   includesPatterns?: string[]
   /**
+   * Excludes files added from `includePatterns` from being searched if it matches at least one of these patterns.
+   *
+   * @default '_*, dist, node_modules'
+   */
+  excludesPatterns?: string[]
+  /**
    * Whether to include debugging logs.
    *
    * @default false
@@ -114,5 +121,22 @@ interface BiDirectionalLinksOptions {
    * @default false
    */
   noNoMatchedFileWarning?: boolean
+  /**
+   * Generate an error link or a link to a specific page when no matched file is found.
+   *
+   * When you use this option, you should define a css style for
+   * `.nolebase-route-link-invalid` (or `a[href="#"] {}`) to
+   * distinguish the invalid link from the normal link. Such as:
+   * `a.nolebase-route-link-invalid { color: red; opacity: 0.6; }`
+   *
+   * @default false
+   */
+  stillRenderNoMatched?: boolean
+  /**
+   * Force a relative path instead of an absolute path
+   *
+   * @default false
+   */
+  isRelativePath?: boolean
 }
 ```

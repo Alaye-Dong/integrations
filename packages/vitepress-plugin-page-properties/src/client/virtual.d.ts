@@ -17,7 +17,7 @@ interface DatetimeProperty<K extends PropertyKey> {
   key: K
   title: string
   formatAsFrom?: boolean
-  dateFnsLocaleName?: string
+  dateFnsLocaleName?: import('./types').LocaleName
   format?: string
   omitEmpty?: boolean
 }
@@ -41,8 +41,8 @@ interface DynamicProperty<K extends PropertyKey> {
   key: K | string
   title: string
   options:
-    DynamicWordsCountProperty |
-    DynamicReadingTimeProperty
+    | DynamicWordsCountProperty
+    | DynamicReadingTimeProperty
 }
 
 interface DynamicWordsCountProperty {
@@ -51,16 +51,16 @@ interface DynamicWordsCountProperty {
 
 interface DynamicReadingTimeProperty {
   type: 'readingTime'
-  dateFnsLocaleName?: string
+  dateFnsLocaleName?: import('./types').LocaleName
 }
 
-type Property<K extends PropertyKey> =
-  TagsProperty<K> |
-  PlainProperty<K> |
-  DatetimeProperty<K> |
-  ProgressProperty<K> |
-  LinkProperty<K> |
-  DynamicProperty<K>
+type Property<K extends PropertyKey>
+  = | TagsProperty<K>
+    | PlainProperty<K>
+    | DatetimeProperty<K>
+    | ProgressProperty<K>
+    | LinkProperty<K>
+    | DynamicProperty<K>
 
 type PropertyType = Property<PropertyKey>['type']
 type DynamicPropertyType = DynamicProperty<PropertyKey>['options']['type']

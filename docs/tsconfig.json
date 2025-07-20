@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "declaration": true,
+    "noEmit": false
+  },
+  "include": [
+    "./.vitepress/**/*",
+    "**/*.d.ts"
+  ]
+}

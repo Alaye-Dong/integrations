@@ -8,6 +8,7 @@ import type {
   DynamicWordsCountProperty,
   LinkProperty,
   Locale,
+  LocaleName,
   Options,
   PlainProperty,
   ProgressProperty,
@@ -18,6 +19,7 @@ import type {
 
 import NolebasePageProperties from './components/PageProperties.vue'
 import NolebasePagePropertiesEditor from './components/PagePropertiesEditor.vue'
+
 import { InjectionKey } from './constants'
 
 const components = {
@@ -51,6 +53,7 @@ export type {
   DynamicWordsCountProperty,
   LinkProperty,
   Locale,
+  LocaleName,
   Options,
   PlainProperty,
   ProgressProperty,

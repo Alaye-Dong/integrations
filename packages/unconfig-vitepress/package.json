@@ -1,8 +1,8 @@
 {
   "name": "@nolebase/unconfig-vitepress",
   "type": "module",
-  "version": "2.11.1",
-  "private": "true",
+  "version": "2.18.0",
+  "private": true,
   "description": "A unconfig (unified configurations) for both VitePress and VitePress theme. Supporting all Nólëbase Integrations with default theme.",
   "author": {
     "name": "Nólëbase",
@@ -52,7 +52,11 @@
   "scripts": {
     "dev": "concurrently \"pnpm run stub\"",
     "stub": "unbuild --stub",
-    "build": "unbuild"
+    "build": "unbuild",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vitepress": "catalog:vitepress-all"
   },
   "dependencies": {
     "@nolebase/vitepress-plugin-enhanced-mark": "workspace:^",
@@ -63,10 +67,9 @@
     "@nolebase/vitepress-plugin-index": "workspace:^",
     "@nolebase/vitepress-plugin-inline-link-preview": "workspace:^",
     "@nolebase/vitepress-plugin-page-properties": "workspace:^",
-    "@nolebase/vitepress-plugin-thumbnail-hash": "workspace:^",
-    "vitepress": "catalog:"
+    "@nolebase/vitepress-plugin-thumbnail-hash": "workspace:^"
   },
   "devDependencies": {
-    "builtin-modules": "^4.0.0"
+    "builtin-modules": "catalog:"
   }
 }

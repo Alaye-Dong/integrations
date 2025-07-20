@@ -1,4 +1,5 @@
 import type { PluginWithOptions } from 'markdown-it'
+
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path/posix'
 
@@ -8,7 +9,9 @@ import { normalizePath } from 'vite'
 
 const defaultMapGlobPatterns = [
   '**/.vitepress/cache/@nolebase/vitepress-plugin-thumbnail-hash/thumbhashes/map.json',
+  '.vitepress/cache/@nolebase/vitepress-plugin-thumbnail-hash/thumbhashes/map.json',
   '**/thumbhashes/map.json',
+  'thumbhashes/map.json',
 ]
 
 export interface ThumbHashAsset {
@@ -151,7 +154,7 @@ function ensureThumbhashMap(
   if (!('mapGlobPatterns' in options))
     throw new Error('either thumbhash.map, thumbhash.mapFilePath, or thumbhash.mapGlobPatterns is required')
 
-  let mapGlobPatterns = []
+  let mapGlobPatterns: string[] = []
 
   if (Array.isArray(options.mapGlobPatterns))
     mapGlobPatterns = options.mapGlobPatterns
@@ -178,6 +181,9 @@ function ensureThumbhashMap(
       continue
 
     foundThumbhashMapPath = matchedFiles[0]
+  }
+  if (!foundThumbhashMapPath) {
+    throw new Error(`No thumbhash map file found in the glob patterns: ${mapGlobPatterns.join(', ')}`)
   }
 
   return JSON.parse(readFileSync(foundThumbhashMapPath, 'utf-8'))
@@ -282,9 +288,9 @@ export const UnlazyImages: () => PluginWithOptions<UnlazyImagesOptions> = () => 
       // have stated
       props.thumbhash = matchedThumbhashData.dataBase64
       props.placeholderSrc = matchedThumbhashData.dataUrl
-      props.width = matchedThumbhashData.originalWidth.toString()
-      props.height = matchedThumbhashData.originalHeight.toString()
-      props.autoSizes = 'true'
+      props.autoSizes = (props.width || props.height) ? 'false' : 'true'
+      props.width = props.width ?? matchedThumbhashData.originalWidth.toString()
+      props.height = props.height ?? matchedThumbhashData.originalHeight.toString()
 
       return `<${imgElementTag} ${Object.entries(props).map(([name, value]) => `${name}="${value}"`).join(' ')} />`
     }

@@ -1,7 +1,7 @@
+import type { Options as NolebaseEnhancedReadabilitiesOptions } from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import type {
   Options as NolebaseGitChangelogOptions,
 } from '@nolebase/vitepress-plugin-git-changelog/client'
-
 import type {
   Options as NolebaseInlineLinkPreviewOptions,
 } from '@nolebase/vitepress-plugin-inline-link-preview/client'
@@ -10,45 +10,36 @@ import type {
 } from '@nolebase/vitepress-plugin-page-properties/client'
 
 import type { PluginSet } from '../../types'
-import {
-  LayoutMode,
-  type Options as NolebaseEnhancedReadabilitiesOptions,
-} from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 
 import {
+  LayoutMode,
   NolebaseEnhancedReadabilitiesMenu,
   NolebaseEnhancedReadabilitiesPlugin,
   NolebaseEnhancedReadabilitiesScreenMenu,
-} from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 
+} from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import {
   NolebaseGitChangelogPlugin,
 } from '@nolebase/vitepress-plugin-git-changelog/client'
 import {
   NolebaseGraphView,
 } from '@nolebase/vitepress-plugin-graph-view/client'
-
 import {
   NolebaseHighlightTargetedHeading,
   NolebaseNolebaseHighlightTargetedHeadingPlugin,
 } from '@nolebase/vitepress-plugin-highlight-targeted-heading/client'
-
 import {
   NolebaseIndexPlugin,
 } from '@nolebase/vitepress-plugin-index/client'
-
 import {
   NolebaseInlineLinkPreviewPlugin,
 } from '@nolebase/vitepress-plugin-inline-link-preview/client'
-
 import {
   NolebasePagePropertiesPlugin,
 } from '@nolebase/vitepress-plugin-page-properties/client'
-
 import {
   NolebaseUnlazyImg,
 } from '@nolebase/vitepress-plugin-thumbnail-hash/client'
-
 import { h } from 'vue'
 
 export interface NolebasePluginPresetOptions<PagePropertiesObject extends object = any> {
